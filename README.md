@@ -20,10 +20,10 @@
         -   [2. RedshiftService (redshiftAdapter.ts)](#2-redshiftservice-redshiftadapterts)
         -   [3. DynamoDBService (dynamoAdapter.ts)](#3-dynamodbservice-dynamoadapterts)
         -   [4. AuroraService (auroraAdapter.ts)](#4-auroraservice-auroraadapterts)
-        -   [3. AuroraAdapter (aurora_index.ts)](#3-auroraadapter-aurora_indexts)
-        -   [4. DynamoDBAdapter (dynamo_index.ts)](#4-dynamodbadapter-dynamo_indexts)
-        -   [5. RDSAdapter (rds_index.ts)](#5-rdsadapter-rds_indexts)
-        -   [6. RedshiftAdapter (redshift_index.ts)](#6-redshiftadapter-redshift_indexts)
+        -   [5. AuroraAdapter (aurora_index.ts)](#5-auroraadapter-aurora_indexts)
+        -   [6. DynamoDBAdapter (dynamo_index.ts)](#6-dynamodbadapter-dynamo_indexts)
+        -   [7. RDSAdapter (rds_index.ts)](#7-rdsadapter-rds_indexts)
+        -   [8. RedshiftAdapter (redshift_index.ts)](#8-redshiftadapter-redshift_indexts)
 
 ## Introduction
 
@@ -152,7 +152,7 @@ This adapter is designed to interact with Amazon Aurora, a relational database s
     - delete: Deletes a record by its primary key from the specified table.
     - list: Retrieves all records from the specified table with optional filtering and pagination.
 
-### 3. AuroraAdapter (aurora_index.ts)
+### 5. AuroraAdapter (aurora_index.ts)
 
 **Purpose**:
 This file demonstrates how to use a AuroraAdapter to interact with Amazon Aurora, a MySQL and PostgreSQL-compatible relational database built for the cloud.
@@ -162,7 +162,7 @@ This file demonstrates how to use a AuroraAdapter to interact with Amazon Aurora
 1. **Configuration**: Provides configurations for different tables (customer_table and customer_user_table).
 2. **CRUDL Operations**: Demonstrates CRUDL operations for Customer and CustomerUser entities using the AuroraAdapter.
 
-### 4. DynamoDBAdapter (dynamo_index.ts)
+### 6. DynamoDBAdapter (dynamo_index.ts)
 
 **Purpose**:
 This file showcases the usage of a DynamoDBAdapter to interact with Amazon DynamoDB, a NoSQL database service.
@@ -172,7 +172,7 @@ This file showcases the usage of a DynamoDBAdapter to interact with Amazon Dynam
 1. **Initialisation**: Sets up a generic DynamoDB service without specific table configurations.
 2. **CRUDL Operations**: Demonstrates CRUDL operations for Customer and CustomerUser entities using the DynamoDBAdapter. Each service can be used for multiple tables in a DynamoDB instance.
 
-### 5. RDSAdapter (rds_index.ts)
+### 7. RDSAdapter (rds_index.ts)
 
 **Purpose**:
 This file demonstrates how to use the RDSService to interact with RDS.
@@ -182,7 +182,7 @@ This file demonstrates how to use the RDSService to interact with RDS.
 1. **Configuration**: Provides configurations for different tables (customer_table and customer_user_table).
 2. **CRUDL Operations**: Demonstrates CRUDL operations for Customer and CustomerUser entities using the RDSAdapter.
 
-### 6. RedshiftAdapter (redshift_index.ts)
+### 8. RedshiftAdapter (redshift_index.ts)
 
 **Purpose**:
 This file showcases the usage of the RedshiftService to interact with Amazon Redshift.
