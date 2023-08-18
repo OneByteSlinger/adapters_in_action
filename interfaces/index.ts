@@ -1,4 +1,6 @@
-export interface IDatabaseAdapter<T> {
+import { PaginationOptions } from '../types';
+
+interface IDatabaseAdapter<T> {
     create(item: T, tableName?: string): Promise<T>;
     read(id: string, tableName?: string): Promise<T | null>;
     update(id: string, updatedItem: T, tableName?: string): Promise<T>;
@@ -9,25 +11,11 @@ export interface IDatabaseAdapter<T> {
     ): Promise<T[]>;
 }
 
-export interface ICustomer {
-    id: string;
-    name: string;
-    email: string;
-}
-
-export interface ICustomerUser {
-    id: string;
-    customerId: string;
-    name: string;
-    email: string;
-    phone: string;
-}
-
-export interface IDynamoDBAdapterConfig {
+interface IDynamoDBAdapterConfig {
     region?: string;
 }
 
-export interface IRDSAdapterConfig {
+interface IRDSAdapterConfig {
     host: string;
     user: string;
     password: string;
@@ -39,7 +27,7 @@ export interface IRDSAdapterConfig {
     connectionTimeoutMillis?: number;
 }
 
-export interface IAuroraAdapterConfig {
+interface IAuroraAdapterConfig {
     secretArn: string;
     resourceArn: string;
     database: string;
@@ -47,7 +35,7 @@ export interface IAuroraAdapterConfig {
     region?: string;
 }
 
-export interface IRedshiftAdapterConfig {
+interface IRedshiftAdapterConfig {
     secretArn: string;
     resourceArn: string;
     database: string;
@@ -55,7 +43,10 @@ export interface IRedshiftAdapterConfig {
     region?: string;
 }
 
-export type PaginationOptions = {
-    limit?: number;
-    startKey?: string;
+export {
+    IDatabaseAdapter,
+    IDynamoDBAdapterConfig,
+    IRDSAdapterConfig,
+    IAuroraAdapterConfig,
+    IRedshiftAdapterConfig,
 };

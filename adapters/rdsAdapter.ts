@@ -1,9 +1,6 @@
-import {
-    IDatabaseAdapter,
-    IRDSAdapterConfig,
-    PaginationOptions,
-} from '../interfaces';
+import { IDatabaseAdapter, IRDSAdapterConfig } from '../interfaces';
 import { Pool } from 'pg';
+import { PaginationOptions } from '../types';
 
 export default class RDSService<T> implements IDatabaseAdapter<T> {
     private pool: Pool;

@@ -2,11 +2,8 @@ import {
     RDSDataClient,
     ExecuteStatementCommand,
 } from '@aws-sdk/client-rds-data';
-import {
-    IAuroraAdapterConfig,
-    IDatabaseAdapter,
-    PaginationOptions,
-} from '../interfaces';
+import { IAuroraAdapterConfig, IDatabaseAdapter } from '../interfaces';
+import { PaginationOptions } from '../types';
 
 export default class AuroraService<T> implements IDatabaseAdapter<T> {
     private client: RDSDataClient;

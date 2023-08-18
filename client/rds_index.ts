@@ -3,8 +3,8 @@ import RDSAdapter from '../adapters/rdsAdapter';
 import { IRDSAdapterConfig } from '../interfaces';
 
 // models or entities
-import { ICustomer } from '../interfaces';
-import { ICustomerUser } from '../interfaces';
+import { ICustomer } from '../types';
+import { ICustomerUser } from '../types';
 
 // Config for Customer Service
 const rdsServiceCustomerConfig: IRDSAdapterConfig = {

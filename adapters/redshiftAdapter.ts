@@ -5,8 +5,9 @@ import {
 import {
     IDatabaseAdapter,
     IRedshiftAdapterConfig,
-    PaginationOptions,
 } from '../interfaces';
+
+import { PaginationOptions } from '../types';
 
 export default class RedshiftService<T> implements IDatabaseAdapter<T> {
     private client: RDSDataClient;

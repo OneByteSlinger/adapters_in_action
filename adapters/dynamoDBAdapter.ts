@@ -7,11 +7,8 @@ import {
     ScanCommand,
 } from '@aws-sdk/client-dynamodb';
 import { marshall, unmarshall } from '@aws-sdk/util-dynamodb';
-import {
-    IDatabaseAdapter,
-    IDynamoDBAdapterConfig,
-    PaginationOptions,
-} from '../interfaces';
+import { IDatabaseAdapter, IDynamoDBAdapterConfig } from '../interfaces';
+import { PaginationOptions } from '../types';
 
 export default class DynamoDBService<T> implements IDatabaseAdapter<T> {
     private client: DynamoDBClient;
