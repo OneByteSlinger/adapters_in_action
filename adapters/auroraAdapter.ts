@@ -38,7 +38,7 @@ export default class AuroraService<T> implements IDatabaseAdapter<T> {
         return response.records;
     }
 
-    async create(item: T, tableName?: string): Promise<T> {
+    async create(item: T): Promise<T> {
         const keys = Object.keys(item as object);
         const values = Object.values(item as object);
         const placeholders = keys.map((_, index) => `$${index + 1}`).join(',');
@@ -50,13 +50,13 @@ export default class AuroraService<T> implements IDatabaseAdapter<T> {
         return item;
     }
 
-    async read(id: string, tableName?: string): Promise<T | null> {
+    async read(id: string): Promise<T | null> {
         const sql = `SELECT * FROM ${this.tableName} WHERE id = $1`;
         const result = await this.executeSql(sql, [id]);
         return result[0] || null;
     }
 
-    async update(id: string, updatedItem: T, tableName?: string): Promise<T> {
+    async update(id: string, updatedItem: T): Promise<T> {
         const keys = Object.keys(updatedItem as object);
         const values = Object.values(updatedItem as object);
         const setString = keys
@@ -70,15 +70,12 @@ export default class AuroraService<T> implements IDatabaseAdapter<T> {
         return this.read(this.tableName, id) as Promise<T>;
     }
 
-    async delete(id: string, tableName?: string): Promise<void> {
+    async delete(id: string): Promise<void> {
         const sql = `DELETE FROM ${this.tableName} WHERE id = $1`;
         await this.executeSql(sql, [id]);
     }
 
-    async list(
-        paginationOptions?: PaginationOptions,
-        tableName?: string,
-    ): Promise<T[]> {
+    async list(paginationOptions?: PaginationOptions): Promise<T[]> {
         const limit = paginationOptions?.limit || 10;
         const offset =
             (parseInt(paginationOptions?.startKey || '0') || 0) * limit;

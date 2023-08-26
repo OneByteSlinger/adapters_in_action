@@ -1,18 +1,16 @@
 import { PaginationOptions } from '../types';
 
 interface IDatabaseAdapter<T> {
-    create(item: T, tableName?: string): Promise<T>;
-    read(id: string, tableName?: string): Promise<T | null>;
-    update(id: string, updatedItem: T, tableName?: string): Promise<T>;
-    delete(id: string, tableName?: string): Promise<void>;
-    list(
-        paginationOptions?: PaginationOptions,
-        tableName?: string,
-    ): Promise<T[]>;
+    create(item: T): Promise<T>;
+    read(id: string): Promise<T | null>;
+    update(id: string, updatedItem: T): Promise<T>;
+    delete(id: string): Promise<void>;
+    list(paginationOptions?: PaginationOptions): Promise<T[]>;
 }
 
 interface IDynamoDBAdapterConfig {
     region?: string;
+    tableName: string;
 }
 
 interface IRDSAdapterConfig {

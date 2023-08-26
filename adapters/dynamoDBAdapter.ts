@@ -12,27 +12,27 @@ import { PaginationOptions } from '../types';
 
 export default class DynamoDBService<T> implements IDatabaseAdapter<T> {
     private client: DynamoDBClient;
+    private tableName: string;
 
     constructor(config: IDynamoDBAdapterConfig) {
         this.client = new DynamoDBClient({
             region: config.region || 'eu-west-1',
         });
+        this.tableName = config.tableName;
     }
 
-    async create(item: T, tableName: string): Promise<T> {
-        if (!tableName) throw new Error('Table name is required');
+    async create(item: T): Promise<T> {
         const params = {
-            TableName: tableName,
+            TableName: this.tableName,
             Item: marshall(item),
         };
         await this.client.send(new PutItemCommand(params));
         return item;
     }
 
-    async read(id: string, tableName: string): Promise<T | null> {
-        if (!tableName) throw new Error('Table name is required');
+    async read(id: string): Promise<T | null> {
         const params = {
-            TableName: tableName,
+            TableName: this.tableName,
             Key: marshall({ id }),
         };
         const result = await this.client.send(new GetItemCommand(params));
@@ -42,8 +42,7 @@ export default class DynamoDBService<T> implements IDatabaseAdapter<T> {
         return unmarshall(result.Item) as T;
     }
 
-    async update(id: string, updatedItem: T, tableName: string): Promise<T> {
-        if (!tableName) throw new Error('Table name is required');
+    async update(id: string, updatedItem: T): Promise<T> {
         const marshalledItem = marshall(updatedItem);
 
         let updateExpression = 'SET ';
@@ -61,7 +60,7 @@ export default class DynamoDBService<T> implements IDatabaseAdapter<T> {
         updateExpression = updateExpression.slice(0, -1);
 
         const params = {
-            TableName: tableName,
+            TableName: this.tableName,
             Key: marshall({ id }),
             UpdateExpression: updateExpression,
             ExpressionAttributeValues: expressionAttributeValues,
@@ -76,22 +75,17 @@ export default class DynamoDBService<T> implements IDatabaseAdapter<T> {
         return unmarshall(result.Attributes) as T;
     }
 
-    async delete(id: string, tableName: string): Promise<void> {
-        if (!tableName) throw new Error('Table name is required');
+    async delete(id: string): Promise<void> {
         const params = {
-            TableName: tableName,
+            TableName: this.tableName,
             Key: marshall({ id }),
         };
         await this.client.send(new DeleteItemCommand(params));
     }
 
-    async list(
-        paginationOptions?: PaginationOptions,
-        tableName?: string,
-    ): Promise<T[]> {
-        if (!tableName) throw new Error('Table name is required');
+    async list(paginationOptions?: PaginationOptions): Promise<T[]> {
         const params = {
-            TableName: tableName,
+            TableName: this.tableName,
             Limit: paginationOptions?.limit || 10,
             ExclusiveStartKey: paginationOptions?.startKey
                 ? marshall({ id: paginationOptions.startKey })

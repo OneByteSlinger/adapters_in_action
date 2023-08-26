@@ -6,11 +6,25 @@ import { IDynamoDBAdapterConfig } from '../interfaces';
 import { ICustomer } from '../types';
 import { ICustomerUser } from '../types';
 
-// Config for Customer Service
-const dynamoDBServiceConfig: IDynamoDBAdapterConfig = {};
+// Config for DynamoDB Service for Customer User table
+const dynamoDBServiceCustomerUserConfig: IDynamoDBAdapterConfig = {
+    tableName: 'customer_user_table',
+};
 
 // DynamoDBService to use any table in a DynamoDB instance
-const dynamoDBService = new DynamoDBAdapter<ICustomer>(dynamoDBServiceConfig);
+const dynamoDBServiceCustomerUser = new DynamoDBAdapter<ICustomerUser>(
+    dynamoDBServiceCustomerUserConfig,
+);
+
+// Config for DynamoDB Service for Customer table
+const dynamoDBServiceCustomerConfig: IDynamoDBAdapterConfig = {
+    tableName: 'customer_table',
+};
+
+// DynamoDBService to use any table in a DynamoDB instance
+const dynamoDBServiceCustomer = new DynamoDBAdapter<ICustomer>(
+    dynamoDBServiceCustomerConfig,
+);
 
 // A Customer
 const customer: ICustomer = {
@@ -31,52 +45,45 @@ const customerUser: ICustomerUser = {
 // CRUDL (Create, Read, Update, Delete, List) operations for CustomerUser entity using dynamoDBServiceCustomerUser and IIFE (Immediately Invoked Function Expression to handle async/await) - Each service can be used for multiple tables in a DynamoDB instance
 (async function DynamoDBCRUDLOperationsCustomerUser() {
     // create a customerUser
-    const createdCustomerUser = await dynamoDBService.create(
+    const createdCustomerUser = await dynamoDBServiceCustomerUser.create(
         customerUser,
-        'customer_user_table',
     );
 
     console.log('createdCustomerUser', createdCustomerUser);
 
     // read a customerUser
-    const readCustomerUser = await dynamoDBService.read(
+    const readCustomerUser = await dynamoDBServiceCustomerUser.read(
         customerUser.id,
-        'customer_user_table',
     );
 
-    console.log('readCustomerUser', readCustomerUser);
+    console.log('readCustomerUser', dynamoDBServiceCustomerUser);
 
     // update a customerUser
-    const updatedCustomerUser = await dynamoDBService.update(
+    const updatedCustomerUser = await dynamoDBServiceCustomerUser.update(
         customerUser.id,
         {
             ...customerUser,
             name: 'Susan Doe',
         },
-        'customer_user_table',
     );
 
     console.log('updatedCustomerUser', updatedCustomerUser);
 
     // delete a customerUser
-    await dynamoDBService.delete(customerUser.id, 'customer_user_table');
+    await dynamoDBServiceCustomerUser.delete(customerUser.id);
 
     // read a customerUser
-    const readCustomerUserAfterDelete = await dynamoDBService.read(
+    const readCustomerUserAfterDelete = await dynamoDBServiceCustomerUser.read(
         customerUser.id,
-        'customer_user_table',
     );
 
     console.log('readCustomerUserAfterDelete', readCustomerUserAfterDelete);
 
     // list customerUsers
-    const listCustomerUsers = await dynamoDBService.list(
-        {
-            limit: 10,
-            startKey: '1',
-        },
-        'customer_user_table',
-    );
+    const listCustomerUsers = await dynamoDBServiceCustomerUser.list({
+        limit: 10,
+        startKey: '1',
+    });
 
     console.log('listCustomerUsers', listCustomerUsers);
 })();
@@ -84,52 +91,38 @@ const customerUser: ICustomerUser = {
 // CRUDL (Create, Read, Update, Delete, List) operations for Customer entity using dynamoDBServiceCustomer and IIFE (Immediately Invoked Function Expression to handle async/await)
 (async function DynamoDBCRUDLOperationsCustomer() {
     // create a customer
-    const createdCustomer = await dynamoDBService.create(
-        customer,
-        'customer_table',
-    );
+    const createdCustomer = await dynamoDBServiceCustomer.create(customer);
 
     console.log('createdCustomer', createdCustomer);
 
     // read a customer
-    const readCustomer = await dynamoDBService.read(
-        customer.id,
-        'customer_table',
-    );
+    const readCustomer = await dynamoDBServiceCustomer.read(customer.id);
 
     console.log('readCustomer', readCustomer);
 
     // update a customer
-    const updatedCustomer = await dynamoDBService.update(
-        customer.id,
-        {
-            ...customer,
-            name: 'Jane Doe',
-        },
-        'customer_table',
-    );
+    const updatedCustomer = await dynamoDBServiceCustomer.update(customer.id, {
+        ...customer,
+        name: 'Jane Doe',
+    });
 
     console.log('updatedCustomer', updatedCustomer);
 
     // delete a customer
-    await dynamoDBService.delete(customer.id, 'customer_table');
+    await dynamoDBServiceCustomer.delete(customer.id);
 
     // read a customer
-    const readCustomerAfterDelete = await dynamoDBService.read(
-        'customer_table',
+    const readCustomerAfterDelete = await dynamoDBServiceCustomer.read(
         customer.id,
     );
 
     console.log('readCustomerAfterDelete', readCustomerAfterDelete);
 
     // list customers - with pagination
-    const listCustomers = await dynamoDBService.list(
-        {
-            limit: 10,
-            startKey: '1',
-        },
-        'customer_table',
-    );
+    const listCustomers = await dynamoDBServiceCustomer.list({
+        limit: 10,
+        startKey: '1',
+    });
 
     console.log('listCustomers', listCustomers);
 })();
