@@ -7,17 +7,18 @@ import {
     ScanCommand,
 } from '@aws-sdk/client-dynamodb';
 import { marshall, unmarshall } from '@aws-sdk/util-dynamodb';
-import { IDatabaseAdapter, IDynamoDBAdapterConfig } from '../interfaces';
+import { IDatabaseAdapter, IDynamoDBServiceConfig } from '../interfaces';
 import { PaginationOptions } from '../types';
 
 export default class DynamoDBService<T> implements IDatabaseAdapter<T> {
     private client: DynamoDBClient;
     private tableName: string;
 
-    constructor(config: IDynamoDBAdapterConfig) {
+    constructor(config: IDynamoDBServiceConfig) {
         this.client = new DynamoDBClient({
             region: config.region || 'eu-west-1',
         });
+        if (!config.tableName) throw new Error('Table name is required');
         this.tableName = config.tableName;
     }
 

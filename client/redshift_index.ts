@@ -1,13 +1,12 @@
-// RedshiftAdaptor and RedshiftAdapterConfig to create a RedshiftService
-import RedshiftAdapter from '../adapters/redshiftAdapter';
-import { IRedshiftAdapterConfig } from '../interfaces';
+// RedshiftAdaptor and RedshiftServiceConfig to create a RedshiftService
+import RedshiftService from '../adapters/redshiftService';
+import { IRedshiftServiceConfig } from '../interfaces';
 
 // models or entities
-import { ICustomer } from '../types';
-import { ICustomerUser } from '../types';
+import { Customer, CustomerUser } from '../types';
 
 // Config for Customer Service
-const redshiftServiceCustomerConfig: IRedshiftAdapterConfig = {
+const redshiftServiceCustomerConfig: IRedshiftServiceConfig = {
     secretArn: 'secretArn',
     resourceArn: 'resourceArn',
     database: 'cutomer_database',
@@ -15,7 +14,7 @@ const redshiftServiceCustomerConfig: IRedshiftAdapterConfig = {
 };
 
 // Config for CustomerUser Service
-const redshiftServiceCustomerUserConfig: IRedshiftAdapterConfig = {
+const redshiftServiceCustomerUserConfig: IRedshiftServiceConfig = {
     secretArn: 'secretArn',
     resourceArn: 'resourceArn',
     database: 'cutomer_user_database',
@@ -23,24 +22,24 @@ const redshiftServiceCustomerUserConfig: IRedshiftAdapterConfig = {
 };
 
 // Adaptor! Give me a RedshiftService with Customer config
-const redshiftServiceCustomerTable = new RedshiftAdapter<ICustomer>(
+const redshiftServiceCustomerTable = new RedshiftService<Customer>(
     redshiftServiceCustomerConfig,
 );
 
 // Adaptor! Give me a RedshiftService with CustomerUser config
-const redshiftServiceCustomerUserTable = new RedshiftAdapter<ICustomerUser>(
+const redshiftServiceCustomerUserTable = new RedshiftService<CustomerUser>(
     redshiftServiceCustomerUserConfig,
 );
 
 // A Customer
-const customer: ICustomer = {
+const customer: Customer = {
     id: '1',
     name: 'John Doe',
     email: 'john.doe@example.com',
 };
 
 // A CustomerUser
-const customerUser: ICustomerUser = {
+const customerUser: CustomerUser = {
     id: '1',
     customerId: '1',
     name: 'Jane Doe',

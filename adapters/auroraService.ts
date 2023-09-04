@@ -2,7 +2,7 @@ import {
     RDSDataClient,
     ExecuteStatementCommand,
 } from '@aws-sdk/client-rds-data';
-import { IAuroraAdapterConfig, IDatabaseAdapter } from '../interfaces';
+import { IAuroraServiceConfig, IDatabaseAdapter } from '../interfaces';
 import { PaginationOptions } from '../types';
 
 export default class AuroraService<T> implements IDatabaseAdapter<T> {
@@ -12,7 +12,7 @@ export default class AuroraService<T> implements IDatabaseAdapter<T> {
     private database: string;
     private tableName: string;
 
-    constructor(config: IAuroraAdapterConfig) {
+    constructor(config: IAuroraServiceConfig) {
         this.client = new RDSDataClient({
             region: config.region || 'eu-west-1',
         });

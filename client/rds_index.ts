@@ -1,13 +1,12 @@
-// RDSAdaptor and RDSAdapterConfig to create a RDSService
-import RDSAdapter from '../adapters/rdsAdapter';
-import { IRDSAdapterConfig } from '../interfaces';
+// RDSAdaptor and RSDServiceConfig to create a RDSService
+import RSDService from '../adapters/rdsService';
+import { IRDSServiceConfig } from '../interfaces';
 
 // models or entities
-import { ICustomer } from '../types';
-import { ICustomerUser } from '../types';
+import { Customer, CustomerUser } from '../types';
 
 // Config for Customer Service
-const rdsServiceCustomerConfig: IRDSAdapterConfig = {
+const rdsServiceCustomerConfig: IRDSServiceConfig = {
     host: 'localhost',
     user: 'John Doe',
     password: 'Secure Password',
@@ -16,7 +15,7 @@ const rdsServiceCustomerConfig: IRDSAdapterConfig = {
 };
 
 // Config for CustomerUser Service
-const rdsServiceCustomerUserConfig: IRDSAdapterConfig = {
+const rdsServiceCustomerUserConfig: IRDSServiceConfig = {
     host: 'localhost',
     user: 'Jane Doe',
     password: 'Secure Password',
@@ -24,25 +23,25 @@ const rdsServiceCustomerUserConfig: IRDSAdapterConfig = {
     tableName: 'customer_user_table',
 };
 
-// Adaptor! Give me a RDSService with Customer config
-const rdsServiceCustomerTable = new RDSAdapter<ICustomer>(
+// Adapter! Give me an RDSService with Customer config
+const rdsServiceCustomerTable = new RSDService<Customer>(
     rdsServiceCustomerConfig,
 );
 
 // Adaptor! Give me a RDSService with CustomerUser config
-const rdsServiceCustomerUserTable = new RDSAdapter<ICustomerUser>(
+const rdsServiceCustomerUserTable = new RSDService<CustomerUser>(
     rdsServiceCustomerUserConfig,
 );
 
 // A Customer
-const customer: ICustomer = {
+const customer: Customer = {
     id: '1',
     name: 'John Doe',
     email: 'john.doe@example.com',
 };
 
 // A CustomerUser
-const customerUser: ICustomerUser = {
+const customerUser: CustomerUser = {
     id: '1',
     customerId: '1',
     name: 'Jane Doe',

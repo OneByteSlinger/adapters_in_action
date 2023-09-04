@@ -1,10 +1,10 @@
-type ICustomer = {
+type Customer = {
     id: string;
     name: string;
     email: string;
 };
 
-type ICustomerUser = {
+type CustomerUser = {
     id: string;
     customerId: string;
     name: string;
@@ -16,4 +16,4 @@ type PaginationOptions = {
     startKey?: string;
 };
 
-export { ICustomer, ICustomerUser, PaginationOptions };
+export { Customer, CustomerUser, PaginationOptions };

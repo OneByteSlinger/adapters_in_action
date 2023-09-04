@@ -1,40 +1,39 @@
-// DynamoDBAdaptor and DynamoDBAdapterConfig to create a DynamoDBService
-import DynamoDBAdapter from '../adapters/dynamoDBAdapter';
-import { IDynamoDBAdapterConfig } from '../interfaces';
+// DynamoDBAdaptor and DynamoDBServiceConfig to create a DynamoDBService
+import DynamoDBService from '../adapters/dynamoDBService';
+import { IDynamoDBServiceConfig } from '../interfaces';
 
 // models or entities
-import { ICustomer } from '../types';
-import { ICustomerUser } from '../types';
+import { Customer, CustomerUser } from '../types';
 
 // Config for DynamoDB Service for Customer User table
-const dynamoDBServiceCustomerUserConfig: IDynamoDBAdapterConfig = {
+const dynamoDBServiceCustomerUserConfig: IDynamoDBServiceConfig = {
     tableName: 'customer_user_table',
 };
 
-// DynamoDBService to use any table in a DynamoDB instance
-const dynamoDBServiceCustomerUser = new DynamoDBAdapter<ICustomerUser>(
+// DynamoDBService to use CustomerUser table in a DynamoDB instance
+const dynamoDBServiceCustomerUser = new DynamoDBService<CustomerUser>(
     dynamoDBServiceCustomerUserConfig,
 );
 
 // Config for DynamoDB Service for Customer table
-const dynamoDBServiceCustomerConfig: IDynamoDBAdapterConfig = {
+const dynamoDBServiceCustomerConfig: IDynamoDBServiceConfig = {
     tableName: 'customer_table',
 };
 
-// DynamoDBService to use any table in a DynamoDB instance
-const dynamoDBServiceCustomer = new DynamoDBAdapter<ICustomer>(
+// DynamoDBService to use Customer table in a DynamoDB instance
+const dynamoDBServiceCustomer = new DynamoDBService<Customer>(
     dynamoDBServiceCustomerConfig,
 );
 
 // A Customer
-const customer: ICustomer = {
+const customer: Customer = {
     id: '1',
     name: 'John Doe',
     email: 'john.doe@example.com',
 };
 
 // A CustomerUser
-const customerUser: ICustomerUser = {
+const customerUser: CustomerUser = {
     id: '1',
     customerId: '1',
     name: 'Jane Doe',

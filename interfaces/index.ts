@@ -8,12 +8,12 @@ interface IDatabaseAdapter<T> {
     list(paginationOptions?: PaginationOptions): Promise<T[]>;
 }
 
-interface IDynamoDBAdapterConfig {
+interface IDynamoDBServiceConfig {
     region?: string;
     tableName: string;
 }
 
-interface IRDSAdapterConfig {
+interface IRDSServiceConfig {
     host: string;
     user: string;
     password: string;
@@ -25,7 +25,7 @@ interface IRDSAdapterConfig {
     connectionTimeoutMillis?: number;
 }
 
-interface IAuroraAdapterConfig {
+interface IAuroraServiceConfig {
     secretArn: string;
     resourceArn: string;
     database: string;
@@ -33,7 +33,7 @@ interface IAuroraAdapterConfig {
     region?: string;
 }
 
-interface IRedshiftAdapterConfig {
+interface IRedshiftServiceConfig {
     secretArn: string;
     resourceArn: string;
     database: string;
@@ -43,8 +43,8 @@ interface IRedshiftAdapterConfig {
 
 export {
     IDatabaseAdapter,
-    IDynamoDBAdapterConfig,
-    IRDSAdapterConfig,
-    IAuroraAdapterConfig,
-    IRedshiftAdapterConfig,
+    IDynamoDBServiceConfig,
+    IRDSServiceConfig,
+    IAuroraServiceConfig,
+    IRedshiftServiceConfig,
 };

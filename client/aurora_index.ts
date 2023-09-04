@@ -1,13 +1,12 @@
-// AuroraAdaptor and AuroraAdapterConfig to create a AuroraService
-import AuroraAdapter from '../adapters/auroraAdapter';
-import { IAuroraAdapterConfig } from '../interfaces';
+// AuroraAdaptor and AuroraServiceConfig to create a AuroraService
+import AuroraService from '../adapters/auroraService';
+import { IAuroraServiceConfig } from '../interfaces';
 
 // models or entities
-import { ICustomer } from '../types';
-import { ICustomerUser } from '../types';
+import { Customer, CustomerUser } from '../types';
 
 // Config for Customer Service
-const auroraServiceCustomerConfig: IAuroraAdapterConfig = {
+const auroraServiceCustomerConfig: IAuroraServiceConfig = {
     secretArn: 'secretArn',
     resourceArn: 'resourceArn',
     database: 'cutomer_database',
@@ -15,7 +14,7 @@ const auroraServiceCustomerConfig: IAuroraAdapterConfig = {
 };
 
 // Config for CustomerUser Service
-const auroraServiceCustomerUserConfig: IAuroraAdapterConfig = {
+const auroraServiceCustomerUserConfig: IAuroraServiceConfig = {
     secretArn: 'secretArn',
     resourceArn: 'resourceArn',
     database: 'cutomer_user_database',
@@ -23,24 +22,24 @@ const auroraServiceCustomerUserConfig: IAuroraAdapterConfig = {
 };
 
 // Adaptor! Give me a AuroraService with Customer config
-const auroraServiceCustomerTable = new AuroraAdapter<ICustomer>(
+const auroraServiceCustomerTable = new AuroraService<Customer>(
     auroraServiceCustomerConfig,
 );
 
 // Adaptor! Give me a AuroraService with CustomerUser config
-const auroraServiceCustomerUserTable = new AuroraAdapter<ICustomerUser>(
+const auroraServiceCustomerUserTable = new AuroraService<CustomerUser>(
     auroraServiceCustomerUserConfig,
 );
 
 // A Customer
-const customer: ICustomer = {
+const customer: Customer = {
     id: '1',
     name: 'John Doe',
     email: 'john.doe@example.com',
 };
 
 // A CustomerUser
-const customerUser: ICustomerUser = {
+const customerUser: CustomerUser = {
     id: '1',
     customerId: '1',
     name: 'Jane Doe',

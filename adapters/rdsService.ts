@@ -1,4 +1,4 @@
-import { IDatabaseAdapter, IRDSAdapterConfig } from '../interfaces';
+import { IDatabaseAdapter, IRDSServiceConfig } from '../interfaces';
 import { Pool } from 'pg';
 import { PaginationOptions } from '../types';
 
@@ -6,7 +6,7 @@ export default class RDSService<T> implements IDatabaseAdapter<T> {
     private pool: Pool;
     private tableName: string;
 
-    constructor(config: IRDSAdapterConfig) {
+    constructor(config: IRDSServiceConfig) {
         this.pool = new Pool({
             host: config.host,
             user: config.user,
@@ -21,7 +21,7 @@ export default class RDSService<T> implements IDatabaseAdapter<T> {
         this.tableName = config.tableName;
     }
 
-    async create(item: T, tableName?: string): Promise<T> {
+    async create(item: T): Promise<T> {
         const client = await this.pool.connect();
         try {
             const keys = Object.keys(item as object);
@@ -41,7 +41,7 @@ export default class RDSService<T> implements IDatabaseAdapter<T> {
         }
     }
 
-    async read(id: string, tableName?: string): Promise<T | null> {
+    async read(id: string): Promise<T | null> {
         const client = await this.pool.connect();
         try {
             const result = await client.query(
@@ -54,7 +54,7 @@ export default class RDSService<T> implements IDatabaseAdapter<T> {
         }
     }
 
-    async update(id: string, updatedItem: T, tableName?: string): Promise<T> {
+    async update(id: string, updatedItem: T): Promise<T> {
         const client = await this.pool.connect();
         try {
             const keys = Object.keys(updatedItem as object);
@@ -68,13 +68,13 @@ export default class RDSService<T> implements IDatabaseAdapter<T> {
                 }`,
                 [...values, id],
             );
-            return this.read(id, tableName) as Promise<T>;
+            return this.read(id) as Promise<T>;
         } finally {
             client.release();
         }
     }
 
-    async delete(id: string, tableName?: string): Promise<void> {
+    async delete(id: string): Promise<void> {
         const client = await this.pool.connect();
         try {
             await client.query(`DELETE FROM ${this.tableName} WHERE id = $1`, [
@@ -85,10 +85,7 @@ export default class RDSService<T> implements IDatabaseAdapter<T> {
         }
     }
 
-    async list(
-        paginationOptions?: PaginationOptions,
-        tableName?: string,
-    ): Promise<T[]> {
+    async list(paginationOptions?: PaginationOptions): Promise<T[]> {
         const client = await this.pool.connect();
         try {
             const limit = paginationOptions?.limit || 10;

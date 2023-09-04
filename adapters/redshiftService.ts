@@ -4,7 +4,7 @@ import {
 } from '@aws-sdk/client-rds-data';
 import {
     IDatabaseAdapter,
-    IRedshiftAdapterConfig,
+    IRedshiftServiceConfig,
 } from '../interfaces';
 
 import { PaginationOptions } from '../types';
@@ -16,7 +16,7 @@ export default class RedshiftService<T> implements IDatabaseAdapter<T> {
     private database: string;
     private tableName: string;
 
-    constructor(config: IRedshiftAdapterConfig) {
+    constructor(config: IRedshiftServiceConfig) {
         this.client = new RDSDataClient({
             region: config.region || 'eu-west-1',
         });
